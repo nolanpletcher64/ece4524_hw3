@@ -59,6 +59,27 @@ class Solution(object):
             colCount = np.zeros(9)
             
             
+        # Iterate through each square in board
+        for i in range(0, 9, 3):
+            
+            # Iterate through each number in square
+            for j in range(0, 9, 3):
+                
+                for k in range(3):
+                    
+                    sqrCount[self.values[i+k][j] - 1] += 1
+                    sqrCount[self.values[i+k][j+1] - 1] += 1
+                    sqrCount[self.values[i+k][j+2] - 1] += 1
+                    
+            # Set sqrSum fitness
+            
+                    
+            # Reset square count
+            sqrCount = np.zeros(9)
+        
+        
+        # Calculate total fitness, PERFECTSCORE = 243
+        self.fitness = "Insert formula here"
         
         return
     
