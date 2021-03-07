@@ -36,10 +36,12 @@ class Solution(object):
                 # Increment number of occurences of the number
                 rowCount[self.values[i][j] - 1] += 1
             
-            rowSum += (1.0 / (len(set(rowCount)))) / 9
+            # Set rowSum fitness
+            
             
             # Reset row count
             rowCount = np.zeros(9)
+            
             
         # Iterate through each column in board
         for i in range(9):
@@ -50,7 +52,8 @@ class Solution(object):
                 # Increment number of occurences of the number
                 colCount[self.values[j][i] - 1] += 1
                 
-            colSum += (1.0 / (len(set(colCount)))) / 9
+            # Set colSum fitness
+            
             
             # Reset column count
             colCount = np.zeros(9)
