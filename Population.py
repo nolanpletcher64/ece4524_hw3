@@ -2,6 +2,7 @@
 # This class contains a collection of Solutions
 
 import numpy as np
+import random
 import Solution
 
 class Population:
@@ -20,11 +21,8 @@ class Population:
             self.solutions.append(Solution.Solution())
 
     def newGeneration(self):
-        # First mutate the current population
-        for solution in self.solutions:
-            solution.mutate()
 
-        # Sort mutated solutions by fitness
+        # Sort solutions by fitness
         self.solutions.sort(reverse=True)
 
         # Build new population comprised of (elitism) number of most fit, and
@@ -35,6 +33,13 @@ class Population:
             newSolutions.append(Solution.Solution())
 
         self.solutions = sorted(newSolutions, reverse=True)
+        
+        # Mutate the new current population
+        for solution in self.solutions: 
+            
+            # Mutate based on probability
+            if (random.random() >= self.mutateProb):
+                solution.mutate()        
 
         # return max fitness value
         return self.solutions[0].getFitness()
