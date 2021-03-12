@@ -35,23 +35,45 @@ class SudokuBoard:
         return result
 
 
-    def getFitness(self): # fitness of the board - max is 243
-        fitness = 0
+
+    # Faster function for testing
+    def getFitness(self):    
         
-        # first check the rows for each value from 1 to 9
-        for row in range(self.SZ):
-            checkArray = self.cells[row, :].ravel()
-            fitness += self.numPresent(checkArray, self.SZ)
+        self.cells = self.cells.reshape((9, 9))
+    
+        duplicates = 0
+        for i in range(9):
+            rowSet = set()
+            columnSet = set()
+            boxSet = set()
+            for j in range(9):
+                rowSet.add(self.cells[i][j])
+                columnSet.add(self.cells[j][i])                
+                boxSet.add(self.cells[((i % 3) * 3) + (j % 3)][int(j / 3) + (int(i / 3) * 3)])
+    
+            duplicates += len(rowSet) + len(columnSet) + len(boxSet)
+    
+        return duplicates    
+    
+    '''
+        def getFitness(self): # fitness of the board - max is 243
+            fitness = 0
             
-        # now check the columns for each value from 1 to 9
-        for cols in range(self.SZ):
-            checkArray = self.cells[:, cols].ravel()
-            fitness += self.numPresent(checkArray, self.SZ)
-            
-        # finally check each 3x3 cell...
-        for youter in range(3):
-            for xouter in range(3):
-                checkArray = self.cells[youter*3:youter*3+3, xouter*3:xouter*3+3].ravel()
+            # first check the rows for each value from 1 to 9
+            for row in range(self.SZ):
+                checkArray = self.cells[row, :].ravel()
                 fitness += self.numPresent(checkArray, self.SZ)
                 
-        return fitness
+            # now check the columns for each value from 1 to 9
+            for cols in range(self.SZ):
+                checkArray = self.cells[:, cols].ravel()
+                fitness += self.numPresent(checkArray, self.SZ)
+                
+            # finally check each 3x3 cell...
+            for youter in range(3):
+                for xouter in range(3):
+                    checkArray = self.cells[youter*3:youter*3+3, xouter*3:xouter*3+3].ravel()
+                    fitness += self.numPresent(checkArray, self.SZ)
+                    
+            return fitness
+        '''    

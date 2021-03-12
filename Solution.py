@@ -47,7 +47,7 @@ class Solution(SudokuBoard.SudokuBoard):
         
         # Check for duplicate values in a column, used for mutate
         for col in range(0,9):
-            if (self.cells[row, col] == value):
+            if (self.cells[row][col] == value):
                 return True
         
         return False

@@ -26,19 +26,28 @@ class Population:
         self.solutions.sort(reverse=True)
 
         # Build new population comprised of (elitism) number of most fit, and
-        # (antielitism) number of least fit, filling in rest with random solutions
+        # (antielitism) number of least fit to start with
         newSolutions = self.solutions[-self.antielitism:] + self.solutions[:self.elitism]
+        
+        fitProbs = []
+        fitSum = 0
+        
+        # Calculate sum of all fitnesses
+        for i in range(len(self.solutions)):
+            fitSum += self.solutions[i].fitness
+            
+        # Create array of probabilites based on fitness (SUM = 1)
+        # Each element = (individual fitness) / (SUM of fitnesses)
+        for i in range(len(self.solutions)):
+            fitProbs.append(self.solutions[i].fitness / fitSum)
+            
 
-        for i in range(self.popsize - len(newSolutions)):
+        for i in range(self.popsize - len(newSolutions)):            
             
-            # newSolutions.append(Solution.Solution())
-            
-            # Choose two parents randomly from half of population with higher fitness            
-            chosen1 = random.randint(0, int(len(self.solutions) / 2))
-            chosen2 = random.randint(0, chosen1)
-            
-            parent1 = self.solutions[chosen1]
-            parent2 = self.solutions[chosen2]
+            # Choose two parents randomly from population
+            # Higher fitness is more likely to be chosen          
+            parent1 = np.random.choice(self.solutions, p = fitProbs)
+            parent2 = np.random.choice(self.solutions, p = fitProbs)
             
             # Breed chosen parents to create new child
             child = parent1.breed(parent2)
