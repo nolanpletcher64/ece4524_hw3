@@ -42,6 +42,27 @@ class Solution(SudokuBoard.SudokuBoard):
         child.fitness = child.getFitness()
         
         return child
+    
+    def crossover(self, other):
+        
+        child = Solution()
+        
+        # Iterate through rows
+        for row in range(0,9):
+            
+            # Randomly choose parent
+            chosenParent = bool(random.getrandbits(1))
+            
+            # Set child's row to parents row
+            if chosenParent:
+                child.cells[row] = self.cells[row]
+            else:
+                child.cells[row] = other.cells[row]
+        
+        # Update fitness
+        child.fitness = child.getFitness()
+        
+        return child    
 
     def colDup(self, row, value):
         
@@ -65,14 +86,19 @@ class Solution(SudokuBoard.SudokuBoard):
         return False
     
     def mutate(self):
-        # Choose a cell and get new random value
-        chosenRow = random.randint(0,8)
-        chosenCol = random.randint(0,8)
-        newVal = random.randint(1,9)
-    
-        # Switch value
-        self.cells[chosenRow][chosenCol] = newVal
-        
+        row = random.randint(0,8)
+
+        col1 = random.randint(0,8)
+        col2 = col1
+
+        while col1 == col2:
+            col2 = random.randint(0,8)
+
+        # Swap these cells values
+        temp = self.cells[row][col1]
+        self.cells[row][col1] = self.cells[row][col2]
+        self.cells[row][col2] = temp
+
         # Update new fitness
         self.fitness = self.getFitness()
 

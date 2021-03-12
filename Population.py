@@ -6,14 +6,17 @@ import random
 import Solution
 
 class Population:
-    NUMGENERATIONS = 1000
+    NUMGENERATIONS = 4000
     PERFECTSCORE = 243
+    
+    # Variable for choosing method (breeding or crossover)
+    METHOD = "crossover"
 
     def __init__(self, popsize, elitism, antielitism):
         self.popsize = popsize
         self.solutions = []
         self.elitism = elitism
-        self.mutateProb = .1
+        self.mutateProb = .01
         self.antielitism = antielitism
 
     def initialize(self):
@@ -22,47 +25,54 @@ class Population:
 
     def newGeneration(self):
 
-        # Sort solutions by fitness
-        self.solutions.sort(reverse=True)
-
         # Build new population comprised of (elitism) number of most fit, and
         # (antielitism) number of least fit to start with
-        newSolutions = self.solutions[-self.antielitism:] + self.solutions[:self.elitism]
+        newParents = self.solutions[-self.antielitism:] + self.solutions[:self.elitism]
         
         fitProbs = []
         fitSum = 0
         
         # Calculate sum of all fitnesses
-        for i in range(len(self.solutions)):
-            fitSum += self.solutions[i].fitness
+        for i in range(len(newParents)):
+            fitSum += newParents[i].fitness
             
         # Create array of probabilites based on fitness (SUM = 1)
         # Each element = (individual fitness) / (SUM of fitnesses)
-        for i in range(len(self.solutions)):
-            fitProbs.append(self.solutions[i].fitness / fitSum)
+        for i in range(len(newParents)):
+            fitProbs.append(newParents[i].fitness / fitSum)
             
-
-        for i in range(self.popsize - len(newSolutions)):            
+        newSolutions = []
+        
+        for i in range(self.popsize):            
             
             # Choose two parents randomly from population
             # Higher fitness is more likely to be chosen          
-            parent1 = np.random.choice(self.solutions, p = fitProbs)
-            parent2 = np.random.choice(self.solutions, p = fitProbs)
+            parent1 = np.random.choice(newParents, p = fitProbs)
+            parent2 = parent1
+            
+            while (parent1 == parent2):
+                parent2 = np.random.choice(newParents, p = fitProbs)
             
             # Breed chosen parents to create new child
-            child = parent1.breed(parent2)
+            if (self.METHOD == "crossover"):
+                child = parent1.crossover(parent2)                
+            else:
+                child = parent1.breed(parent2)
             
             # Add child to new generation
             newSolutions.append(child)
 
-        self.solutions = sorted(newSolutions, reverse=True)
+        self.solutions = newSolutions
         
         # Mutate the new current population
         for solution in self.solutions: 
             
             # Mutate based on probability
             if (random.random() <= self.mutateProb):
-                solution.mutate()        
+                solution.mutate()
+                
+        # Sort solutions by fitness
+        self.solutions.sort(reverse=True)
 
         # return max fitness value
         return self.solutions[0].getFitness()

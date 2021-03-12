@@ -56,24 +56,24 @@ class SudokuBoard:
         return duplicates    
     
     '''
-        def getFitness(self): # fitness of the board - max is 243
-            fitness = 0
+    def getFitness(self): # fitness of the board - max is 243
+        fitness = 0
+        
+        # first check the rows for each value from 1 to 9
+        for row in range(self.SZ):
+            checkArray = self.cells[row, :].ravel()
+            fitness += self.numPresent(checkArray, self.SZ)
             
-            # first check the rows for each value from 1 to 9
-            for row in range(self.SZ):
-                checkArray = self.cells[row, :].ravel()
+        # now check the columns for each value from 1 to 9
+        for cols in range(self.SZ):
+            checkArray = self.cells[:, cols].ravel()
+            fitness += self.numPresent(checkArray, self.SZ)
+            
+        # finally check each 3x3 cell...
+        for youter in range(3):
+            for xouter in range(3):
+                checkArray = self.cells[youter*3:youter*3+3, xouter*3:xouter*3+3].ravel()
                 fitness += self.numPresent(checkArray, self.SZ)
                 
-            # now check the columns for each value from 1 to 9
-            for cols in range(self.SZ):
-                checkArray = self.cells[:, cols].ravel()
-                fitness += self.numPresent(checkArray, self.SZ)
-                
-            # finally check each 3x3 cell...
-            for youter in range(3):
-                for xouter in range(3):
-                    checkArray = self.cells[youter*3:youter*3+3, xouter*3:xouter*3+3].ravel()
-                    fitness += self.numPresent(checkArray, self.SZ)
-                    
-            return fitness
+        return fitness
     '''    
