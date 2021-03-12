@@ -13,7 +13,7 @@ class Population:
         self.popsize = popsize
         self.solutions = []
         self.elitism = elitism
-        self.mutateProb = .01
+        self.mutateProb = .1
         self.antielitism = antielitism
 
     def initialize(self):

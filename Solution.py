@@ -65,23 +65,16 @@ class Solution(SudokuBoard.SudokuBoard):
         return False
     
     def mutate(self):
-        # Choose a row and get two random values
+        # Choose a cell and get new random value
         chosenRow = random.randint(0,8)
-        chosen1 = random.randint(0,8)
-        chosen2 = random.randint(0,8)
+        chosenCol = random.randint(0,8)
+        newVal = random.randint(1,9)
+    
+        # Switch value
+        self.cells[chosenRow][chosenCol] = newVal
         
-        cell1 = self.cells[chosenRow][chosen1]
-        cell2 = self.cells[chosenRow][chosen2]
-        
-        # Ensure switching will not cause a duplicate in the columns or blocks
-        if ((not self.colDup(chosenRow, cell1)) and (not self.colDup(chosenRow, cell2)) and (not self.blockDup(chosenRow, chosen1, cell2)) and (not self.blockDup(chosenRow, chosen2, cell1))):
-            
-            # Switch values
-            self.cells[chosenRow][chosen1] = cell2
-            self.cells[chosenRow][chosen2] = cell1
-        
-            # Update new fitness
-            self.fitness = self.getFitness()
+        # Update new fitness
+        self.fitness = self.getFitness()
 
     def __lt__(self, other):
         return self.fitness < other.fitness
