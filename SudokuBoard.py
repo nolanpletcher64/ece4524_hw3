@@ -76,4 +76,4 @@ class SudokuBoard:
                     fitness += self.numPresent(checkArray, self.SZ)
                     
             return fitness
-        '''    
+    '''    

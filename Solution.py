@@ -14,7 +14,7 @@ class Solution(SudokuBoard.SudokuBoard):
 
     def populate(self):
         for row in range( self.SZ ):
-            self.cells[row] = list(range(self.SZ))
+            self.cells[row] = list(range(1, self.SZ + 1))
             np.random.shuffle(self.cells[row])
 
         self.fitness = self.getFitness()
