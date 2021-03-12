@@ -6,7 +6,7 @@ import random
 import Solution
 
 class Population:
-    NUMGENERATIONS = 100
+    NUMGENERATIONS = 1000
     PERFECTSCORE = 243
 
     def __init__(self, popsize, elitism, antielitism):

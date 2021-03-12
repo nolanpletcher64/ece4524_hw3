@@ -38,6 +38,9 @@ class Solution(SudokuBoard.SudokuBoard):
                 else:
                     child.cells[i][j] = other.cells[i][j]
         
+        # Update fitness
+        child.fitness = child.getFitness()
+        
         return child
 
     def colDup(self, row, value):
