@@ -30,13 +30,21 @@ class Population:
         newSolutions = self.solutions[-self.antielitism:] + self.solutions[:self.elitism]
 
         for i in range(self.popsize - len(newSolutions)):
-            newSolutions.append(Solution.Solution())
             
-            # Choose two parents based on probability and fitness for breeding
-            # Add child to newSolutions instead of the above random population of solutions
+            # newSolutions.append(Solution.Solution())
             
-            # CODE HERE
+            # Choose two parents randomly from half of population with higher fitness            
+            chosen1 = random.randint(0, int(len(self.solutions) / 2))
+            chosen2 = random.randint(0, chosen1)
             
+            parent1 = self.solutions[chosen1]
+            parent2 = self.solutions[chosen2]
+            
+            # Breed chosen parents to create new child
+            child = parent1.breed(parent2)
+            
+            # Add child to new generation
+            newSolutions.append(child)
 
         self.solutions = sorted(newSolutions, reverse=True)
         
