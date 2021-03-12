@@ -52,7 +52,7 @@ class Population:
         for solution in self.solutions: 
             
             # Mutate based on probability
-            if (random.random() >= self.mutateProb):
+            if (random.random() <= self.mutateProb):
                 solution.mutate()        
 
         # return max fitness value
