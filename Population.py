@@ -13,7 +13,7 @@ class Population:
         self.popsize = popsize
         self.solutions = []
         self.elitism = elitism
-        self.mutateProb = .10
+        self.mutateProb = .01
         self.antielitism = antielitism
 
     def initialize(self):
@@ -31,6 +31,12 @@ class Population:
 
         for i in range(self.popsize - len(newSolutions)):
             newSolutions.append(Solution.Solution())
+            
+            # Choose two parents based on probability and fitness for breeding
+            # Add child to newSolutions instead of the above random population of solutions
+            
+            # CODE HERE
+            
 
         self.solutions = sorted(newSolutions, reverse=True)
         
