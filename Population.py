@@ -6,7 +6,7 @@ import random
 import Solution
 
 class Population:
-    NUMGENERATIONS = 4000
+    NUMGENERATIONS = 10000
     PERFECTSCORE = 243
     
     # Variable for choosing method (breeding or crossover)
@@ -16,7 +16,7 @@ class Population:
         self.popsize = popsize
         self.solutions = []
         self.elitism = elitism
-        self.mutateProb = .01
+        self.mutateProb = .02
         self.antielitism = antielitism
 
     def initialize(self):
@@ -69,6 +69,7 @@ class Population:
             
             # Mutate based on probability
             if (random.random() <= self.mutateProb):
+                solution.mutate()
                 solution.mutate()
                 
         # Sort solutions by fitness

@@ -64,6 +64,7 @@ class Solution(SudokuBoard.SudokuBoard):
         
         return child    
 
+    # No longer used, was used for earlier mutate implementation
     def colDup(self, row, value):
         
         # Check for duplicate values in a column, used for mutate
@@ -73,6 +74,7 @@ class Solution(SudokuBoard.SudokuBoard):
         
         return False
     
+    # No longer used, was used for earlier mutate implementation
     def blockDup(self, row, col, value):
         
         i = 3 * int(row / 3)
